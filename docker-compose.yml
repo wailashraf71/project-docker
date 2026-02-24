@@ -1,6 +1,7 @@
 services:
   postgres:
-    image: postgres:trixie
+    # Use 17 to keep /var/lib/postgresql/data volume layout; 18+ expects mount at /var/lib/postgresql
+    image: postgres:17-alpine
     environment:
       POSTGRES_DB: app
       POSTGRES_USER: app
