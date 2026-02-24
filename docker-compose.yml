@@ -27,7 +27,6 @@ services:
       - postgres
     volumes:
       - ./backend:/var/www/html
-    command: sh -c "cd laravel-app && composer install --no-dev --optimize-autoloader && (grep -q '^APP_KEY=\s*$' .env && php artisan key:generate --force || true) && php artisan migrate --force && exec php-fpm"
     healthcheck:
       test: ["CMD", "php", "-r", "exit(@fsockopen('127.0.0.1', 9000) ? 0 : 1);"]
       interval: 5s
