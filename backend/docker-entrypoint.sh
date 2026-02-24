@@ -11,10 +11,10 @@ if grep -q '^APP_KEY=\s*$' .env 2>/dev/null || ! grep -q '^APP_KEY=base64:' .env
   php artisan key:generate --force
 fi
 
-# Wait for Postgres to be reachable (DNS + TCP)
+# Wait for Postgres to be reachable (safety net; Compose already waits for postgres health)
 echo "Waiting for Postgres..."
 i=0
-while [ "$i" -lt 20 ]; do
+while [ "$i" -lt 30 ]; do
   if php -r "
     try {
       new PDO(
@@ -31,7 +31,7 @@ while [ "$i" -lt 20 ]; do
     break
   fi
   i=$((i + 1))
-  if [ "$i" -eq 20 ]; then
+  if [ "$i" -eq 30 ]; then
     echo "Postgres did not become ready in time."
     exit 1
   fi
