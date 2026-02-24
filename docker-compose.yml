@@ -27,7 +27,7 @@ services:
       - postgres
     volumes:
       - ./backend:/var/www/html
-    command: sh -c "php-fpm"
+    command: sh -c "cd laravel-app && composer install --no-dev --optimize-autoloader && exec php-fpm"
 
   nginx:
     image: nginx:alpine
