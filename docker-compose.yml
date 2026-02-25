@@ -79,6 +79,23 @@ services:
     volumes:
       - pgadmin_data:/var/lib/pgadmin
 
+  # Beekeeper Studio (SQL client). Connect to postgres:5432. Web UI: http://<host>:6080 (noVNC).
+  # Note: sygate/beekeeper targets ARM; on x86 use pgAdmin or desktop Beekeeper connecting to postgres.
+  beekeeper:
+    image: sygate/beekeeper:latest
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "6080:6080"
+      - "5900:5900"
+    volumes:
+      - beekeeper_data:/headless
+    environment:
+      DISPLAY_WIDTH: "1280"
+      DISPLAY_HEIGHT: "720"
+
 volumes:
   pgdata:
   pgadmin_data:
+  beekeeper_data:
