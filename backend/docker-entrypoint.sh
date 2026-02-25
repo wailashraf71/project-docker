@@ -40,4 +40,9 @@ done
 
 php artisan migrate --force
 
+# Ensure storage and cache dirs exist and are writable by PHP-FPM (www-data in php:fpm-alpine)
+mkdir -p storage/framework/{sessions,views,cache} bootstrap/cache
+chmod -R 775 storage bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
+
 exec php-fpm
