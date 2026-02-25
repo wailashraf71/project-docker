@@ -49,3 +49,4 @@ mkdir -p /tmp/laravel-views && chmod 777 /tmp/laravel-views
 php artisan view:clear 2>/dev/null || true
 
 exec php-fpm
+
