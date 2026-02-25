@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Use /tmp for compiled views so Blade always has a writable path (avoids storage permission issues in Docker)
+        Config::set('view.compiled', '/tmp/laravel-views');
+
         static $registered = false;
         if ($registered) {
             return;

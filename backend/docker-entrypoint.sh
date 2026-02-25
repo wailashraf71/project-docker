@@ -43,6 +43,8 @@ php artisan migrate --force
 # Ensure storage and cache dirs exist and are writable by PHP-FPM (bind-mount UID can differ)
 mkdir -p storage/framework/{sessions,views,cache} bootstrap/cache
 chmod -R 777 storage bootstrap/cache
+# Compiled views are set to /tmp/laravel-views in AppServiceProvider; ensure it exists
+mkdir -p /tmp/laravel-views && chmod 777 /tmp/laravel-views
 # Clear stale compiled views so Blade recompiles into the correct path
 php artisan view:clear 2>/dev/null || true
 
