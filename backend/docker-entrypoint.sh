@@ -40,9 +40,10 @@ done
 
 php artisan migrate --force
 
-# Ensure storage and cache dirs exist and are writable by PHP-FPM (www-data in php:fpm-alpine)
+# Ensure storage and cache dirs exist and are writable by PHP-FPM (bind-mount UID can differ)
 mkdir -p storage/framework/{sessions,views,cache} bootstrap/cache
-chmod -R 775 storage bootstrap/cache
-chown -R www-data:www-data storage bootstrap/cache 2>/dev/null || true
+chmod -R 777 storage bootstrap/cache
+# Clear stale compiled views so Blade recompiles into the correct path
+php artisan view:clear 2>/dev/null || true
 
 exec php-fpm
